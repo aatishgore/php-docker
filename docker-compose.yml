@@ -19,6 +19,8 @@ services:
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
+    links:
+      - mysql
 
   #Nginx Service
   webserver:
@@ -36,24 +38,29 @@ services:
       - app-network
 
   #MySQL Service
-  db:
-    image: mysql:5.7.22
-    container_name: db
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: mis_hrms  
-      MYSQL_ROOT_PASSWORD: root
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
+  # db:
+  #   image: mysql:latest
+  #   container_name: db
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "8223:3306"
+  #   environment:
+  #     MYSQL_DATABASE: mis_hrms  
+  #     MYSQL_ROOT_PASSWORD: root
+  #     SERVICE_TAGS: dev
+  #     SERVICE_NAME: mysql
+  #   volumes:
+  #     - dbdata:/var/lib/mysql/
+  #     - ./mysql/my.cnf:/etc/mysql/my.cnf
+  #   networks:
+  #     - app-network
+  mysql:
+    image: mysql:5.6.40
     networks:
       - app-network
-
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
 #Docker Networks
 networks:
   app-network:

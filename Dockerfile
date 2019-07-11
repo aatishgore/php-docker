@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Uncomment if this u get pdo_oci.so error.
-#RUN rm -rf /usr/local/lib/php/extensions/no-debug-non-zts-20170718/pdo_oci.so 
+RUN rm -rf /usr/local/lib/php/extensions/no-debug-non-zts-20170718/pdo_oci.so 
 
 RUN docker-php-ext-install intl mbstring sockets soap calendar
 
